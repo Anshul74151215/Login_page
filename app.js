@@ -1,23 +1,23 @@
 //jshint esversion:6
-require('dotenv').config();
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 // const bcrypt = require("bcrypt");
-const session = require('express-session');
+const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const findOrCreate = require("mongoose-findorcreate");
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const saltRounds = 10;
 const app = express();
 
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 app.use(session({
-  secret: 'keyboard cat',
+  secret: "keyboard cat",
   resave: false,
   saveUninitialized: false,
 }))
