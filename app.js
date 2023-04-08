@@ -106,10 +106,34 @@ app.get("/secrets", function(req, res){
   });
 });
 
+app.get("/submit", function(req, res){
+  if (req.isAuthenticated()){
+    res.render("submit");
+  } else {
+    res.redirect("/login");
+  }
+});
+
 app.get("/logout", function(req, res, next) {
   req.logout(function(err) {
     if (err) { return next(err); }
     res.redirect("/");
+  });
+});
+
+app.post("/submit", function(req, res){
+  const submittedSecret = req.body.secret;
+
+//Once the user is authenticated and their session gets saved, their user details are saved to req.user.
+  // console.log(req.user.id);
+
+  User.findById(req.user.id).then(foundUser=>{
+    if (foundUser) {
+        foundUser.secret = submittedSecret;
+        foundUser.save().then(()=>{
+          res.redirect("/secrets");
+        })
+      }
   });
 });
 
